@@ -1,5 +1,6 @@
 #include "szenergy_kinematic_model/kinematicvehiclemodel.hpp"
 #include "szenergy_kinematic_model/default_config_kinematicvehiclemodel.hpp"
+#include <szenergy_kinematic_model/kinematicparameters_struct.hpp>
 
 namespace jkk
 {
