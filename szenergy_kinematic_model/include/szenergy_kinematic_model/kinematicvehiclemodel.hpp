@@ -104,6 +104,7 @@ public:
 
 		pubsubstate->msg_port_update_odom.pose.pose.position.x = state->x;
 		pubsubstate->msg_port_update_odom.pose.pose.position.y = state->y;
+		getQuaternionFromYaw(state->yaw, pubsubstate->msg_port_update_odom.pose.pose.orientation);
 		pubsubstate->msg_port_update_odom.twist.twist.linear.x = state->dx;
 		pubsubstate->msg_port_update_odom.twist.twist.linear.y = state->dy;
 		pubsubstate->msg_port_update_odom.twist.twist.angular.z = state->dyaw;
@@ -111,8 +112,18 @@ public:
 
 	virtual void executeUpdatevehiclestatus(const autoware_msgs::VehicleStatus::ConstPtr& msg)
 	{
+		if (msg->header.stamp.toSec() < t_prev_update.toSec())
+		{
+			ROS_WARN("Jump backwards in time, resetting pose according to GNSS");
+			kinematic_model->resetPose(
+				pubsubstate->msg_port_gnss_pose.pose.position.x,
+				pubsubstate->msg_port_gnss_pose.pose.position.y,
+				getYawFromQuaternion(pubsubstate->msg_port_gnss_pose.pose.orientation)
+			);
+		}
 		kinematic_model->updateCommand(msg->speed, msg->angle, msg->header.stamp.toSec() - t_prev_update.toSec());
 		updateOdometry();
+		pubsubstate->msg_port_update_odom.header.stamp = msg->header.stamp;
 		publishVehicle_current_velocity();
 		publishVehicle_odom();
 		t_prev_update = msg->header.stamp;

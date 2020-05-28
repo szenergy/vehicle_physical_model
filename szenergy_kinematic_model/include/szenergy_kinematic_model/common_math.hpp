@@ -21,6 +21,12 @@ static double getYawFromQuaternion(const geometry_msgs::Quaternion& q)
 	);
 }
 
+inline void getQuaternionFromYaw(const double& yaw, geometry_msgs::Quaternion& quat)
+{
+	quat.w = cos(yaw/2.0);
+	quat.z = sin(yaw/2.0);
+}
+
 }
 
 

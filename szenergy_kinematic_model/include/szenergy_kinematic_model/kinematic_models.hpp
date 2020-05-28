@@ -44,6 +44,7 @@ public:
 	{
 
 	}
+	virtual ~AbstractVehicleKinematicModel() {};
 
 	void resetPose(const double x, const double y, const double yaw)
 	{
@@ -67,7 +68,7 @@ public:
 class KinematicBicycleKinematicModel: public AbstractVehicleKinematicModel
 {
 protected:
-
+	const double tau = 1.2;
 public:
 	KinematicBicycleKinematicModel(const double wheelbase,
 		const double cog_ratio=0.5):
