@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="szenergy_kinematic_model" type="szenergy_kinematic_model_node" name="nissan_kinematic_model">
+    <remap from="gnss_pose" to="/gps/nova/current_pose"/>
+  </node>
+</launch>
