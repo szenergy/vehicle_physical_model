@@ -84,14 +84,19 @@ public:
 		double beta = atan(tan(wheelangle)*cog_ratio);
 		// Update first order state
 		// TODO: why not integrate?
-		kinematic_state->dx = linearvelocity*cos(kinematic_state->yaw);
-		kinematic_state->dy = linearvelocity*sin(kinematic_state->yaw);
-		kinematic_state->dyaw = (linearvelocity/wheelbase)*tan(wheelangle);
-		//
+		// https://core.ac.uk/download/pdf/31082555.pdf
+		kinematic_state->dyaw = (linearvelocity/wheelbase)*sin(wheelangle);
+		double yaw_tp1 = kinematic_state->yaw + kinematic_state->dyaw * dt;
+
+		// ORIGINALLY: kinematic_state->dyaw = (linearvelocity/wheelbase)*tan(wheelangle);
+		kinematic_state->dx = (linearvelocity/(kinematic_state->dyaw*dt))*
+				(sin(yaw_tp1) - sin(kinematic_state->yaw));
+		kinematic_state->dy -= (linearvelocity/(kinematic_state->dyaw*dt))*
+				(cos(yaw_tp1) - cos(kinematic_state->yaw));
 		//std::cout << dt << '\t'  << kinematic_state->dx  <<'\n';
-		kinematic_state->x += kinematic_state->dx * dt;
-		kinematic_state->y += kinematic_state->dy * dt;
-		kinematic_state->yaw += kinematic_state->dyaw * dt;
+		kinematic_state->x += kinematic_state->dx;
+		kinematic_state->y -= kinematic_state->dy;
+		kinematic_state->yaw = yaw_tp1;
 	}
 };
 

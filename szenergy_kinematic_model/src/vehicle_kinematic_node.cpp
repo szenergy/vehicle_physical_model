@@ -18,15 +18,15 @@ int main(int argc, char **argv)
 	}
 	catch(rei::ExceptionNodePreInitialization &e)
 	{
-		ROS_FATAL_STREAM("Unable to initialize HOTARU TEB LOCAL PLANNER" << e.what());
+		ROS_FATAL_STREAM("Unable to initialize SZENERGY VEHICLE ODOMETRY" << e.what());
 	}
 	catch(rei::ExceptionNodeAssignSyncGuards &e)
 	{
-		ROS_FATAL_STREAM("Unable to initialize HOTARU TEB LOCAL PLANNER" << e.what());
+		ROS_FATAL_STREAM("Unable to initialize SZENERGY VEHICLE ODOMETRY" << e.what());
 	}
 	catch(rei::ExceptionNodeMiddleWare &e)
 	{
-		ROS_FATAL_STREAM("Unable to initialize HOTARU TEB LOCAL PLANNER" << e.what());
+		ROS_FATAL_STREAM("Unable to initialize SZENERGY VEHICLE ODOMETRY" << e.what());
 	}
 	return -1;
 }
