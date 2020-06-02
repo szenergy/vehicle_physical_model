@@ -8,6 +8,7 @@ struct ConfigStructKinematicparameters
 {
 	double wheelbase;
 	double track_width;
+	double cog_ratio;
 };
 
 }

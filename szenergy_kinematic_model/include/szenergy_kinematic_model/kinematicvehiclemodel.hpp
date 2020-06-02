@@ -13,8 +13,14 @@
 #include <szenergy_kinematic_model/KinematicVehicleModelConfig.h>
 #include <szenergy_kinematic_model/kinematicparameters_struct.hpp>
 
+#include <dynamic_reconfigure/server.h>
+
 #include "kinematic_models.hpp"
 #include "common_math.hpp"
+
+#include <szenergy_kinematic_model/KinematicVehicleModelConfig.h>
+
+#include <memory>
 
 namespace jkk
 {
@@ -23,6 +29,7 @@ class KinematicVehicleModel: public InterfaceRos_KinematicVehicleModel
 {
 private:
 	ros::Time t_prev_update;
+	std::shared_ptr< dynamic_reconfigure::Server<szenergy_kinematic_model::KinematicVehicleModelConfig> > dynamic_recfg;
 protected:
 	ConfigStructKinematicparameters kinematic_parameters;
 
@@ -37,12 +44,16 @@ protected:
 			getYawFromQuaternion(pubsubstate->msg_port_gnss_pose.pose.orientation)
 		);
 		t_prev_update = ros::Time::now();
-		std::cout << pubsubstate->msg_port_update_odom.pose.pose << std::endl;
 	}
 
 	void timeoutAfterSync()
 	{
 
+	}
+
+	void updateReconfig()
+	{
+		kinematic_model->updateParameters(kinematic_parameters);
 	}
 
 
@@ -88,6 +99,10 @@ public:
 		setSyncStateMachineCallbacks();
 		pubsubstate->msg_port_current_velocity.header.frame_id = "base_link";
 		pubsubstate->msg_port_update_odom.header.frame_id = "map";
+		dynamic_recfg = std::make_shared<dynamic_reconfigure::Server<szenergy_kinematic_model::KinematicVehicleModelConfig>>();
+		auto f = std::bind(&KinematicVehicleModel::callbackReconfigure, this, std::placeholders::_1, std::placeholders::_2);
+		dynamic_recfg->setCallback(f);
+		updateReconfig();
 		return true;
 	}
 

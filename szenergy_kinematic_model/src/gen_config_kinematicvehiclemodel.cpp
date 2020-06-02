@@ -21,6 +21,12 @@ void KinematicVehicleModel::genParamConfig()
 		kinematic_parameters.track_width = kinematicparameters::DEFAULT_TRACK_WIDTH;
 	}
 	ROS_INFO_STREAM("Using kinematicparameters/track_width:=" << kinematic_parameters.track_width);
+	// Load param cog_ratio
+	if (!private_nh->getParam("kinematicparameters/cog_ratio", kinematic_parameters.cog_ratio))
+	{
+		kinematic_parameters.cog_ratio = kinematicparameters::DEFAULT_COG_RATIO;
+	}
+	ROS_INFO_STREAM("Using kinematicparameters/cog_ratio:=" << kinematic_parameters.cog_ratio);
 }
 
 }

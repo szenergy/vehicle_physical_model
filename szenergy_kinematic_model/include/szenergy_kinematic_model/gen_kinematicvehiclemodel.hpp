@@ -3,10 +3,10 @@
 
 #include <ros/ros.h>
 /// ROS msgs
+#include <geometry_msgs/PoseStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <autoware_msgs/VehicleStatus.h>
 #include <geometry_msgs/TwistStamped.h>
-#include <geometry_msgs/PoseStamped.h>
 #include <rei_statemachine_library/ros/ros_sync_state_machine.hpp>
 // State-machine node element
 #include <rei_common/gen_node_elements/interface_simple_ros_node.hpp>

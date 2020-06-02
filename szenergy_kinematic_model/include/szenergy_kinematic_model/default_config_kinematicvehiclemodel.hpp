@@ -9,6 +9,8 @@ namespace jkk
 		;
 		constexpr double DEFAULT_TRACK_WIDTH = 1.5
 		;
+		constexpr double DEFAULT_COG_RATIO = 0.9
+		;
 	}
 }
 

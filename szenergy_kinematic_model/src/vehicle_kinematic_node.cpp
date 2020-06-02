@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "szenergy_kinematic_bicycle");
 	std::shared_ptr<ros::NodeHandle> nh = std::make_shared<ros::NodeHandle>();
 		std::shared_ptr<ros::NodeHandle> private_nh = std::make_shared<ros::NodeHandle>("~");
-	std::unique_ptr<jkk::AbstractVehicleKinematicModel> bicycle(new jkk::KinematicBicycleKinematicModel(2.7));
+	std::unique_ptr<jkk::AbstractVehicleKinematicModel> bicycle(new jkk::KinematicBicycleKinematicModel(2.7, 0.9));
 	jkk::KinematicVehicleModel vehiclemodel(private_nh, nh, std::move(bicycle));
 	try
 	{
