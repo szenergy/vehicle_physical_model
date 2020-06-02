@@ -91,7 +91,7 @@ public:
 		// ORIGINALLY: kinematic_state->dyaw = (linearvelocity/wheelbase)*tan(wheelangle);
 		kinematic_state->dx = (linearvelocity/(kinematic_state->dyaw))*
 				(sin(yaw_tp1) - sin(kinematic_state->yaw));
-		kinematic_state->dy -= (linearvelocity/(kinematic_state->dyaw))*
+		kinematic_state->dy = (linearvelocity/(kinematic_state->dyaw))*
 				(cos(yaw_tp1) - cos(kinematic_state->yaw));
 		//std::cout << dt << '\t'  << kinematic_state->dx  <<'\n';
 		kinematic_state->x += kinematic_state->dx;
