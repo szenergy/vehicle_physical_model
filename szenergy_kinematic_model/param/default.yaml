@@ -1,4 +1,5 @@
 kinematicparameters:
   wheelbase: 2.7
   track_width: 1.5
-  cog_ratio: 0.889
+  #cog_ratio: 0.889
+  cog_ratio: 0.7
